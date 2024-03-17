@@ -1,4 +1,4 @@
-# podcast_recommandation
+# podcast_recommendation
 Podcast Recommendation Project for CS Course
 
 This project will be able to recommend podcasts for the user based on their input.
