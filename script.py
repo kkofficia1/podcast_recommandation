@@ -16,13 +16,13 @@ def recommend(category):
             continue
     sorted_podcast_list = sort_by_rating(possible_podcasts)
     for i in sorted_podcast_list:
-        print("Title: {0}\nLanguage: {1}\nRating: {2}".format(sorted_podcast_list[i][0],sorted_podcast_list[i][1],sorted_podcast_list[i][2]))
+        print("Title: {0}\nLanguage: {1}\nRating: {2}".format(i[0],i[1],i[2]))
 
 def sort_by_rating(lst):
     l = len(lst)
     for i in range(0, l):
         for j in range(0, l-i-1):
-            if (lst[j][2] > lst[j+1][2]):
+            if (lst[j][2] < lst[j+1][2]):
                 tempo = lst[j]
                 lst[j] = lst[j + 1]
                 lst[j + 1] = tempo
@@ -34,23 +34,34 @@ def autocomplete():
     user_category = input("Which category do you like?\nThis feature uses autocomplete so just type the beginning of your word and press enter to see if it is here: ")
     check_length = len(user_category)
     for category in categories:
-        if category[0:(check_length - 1)] == user_category:
-            possible_categories.append(category)
+        if check_length == 1:
+            if category[0] == user_category:
+                possible_categories.append(category)
+        elif check_length > 1: 
+            if category[0:(check_length)] == user_category:
+                possible_categories.append(category)
+            else:
+                continue
         else:
-            continue
+            autocomplete()
     if len(possible_categories) > 1:
-        print("With those beginning letters, your choices are " + possible_categories)
+        print("With those beginning letters, your choices are " + str(possible_categories))
         autocomplete()
     elif len(possible_categories) < 1:
         print("With those beginning letters, you do not have any choices. Try again")
         autocomplete()
     elif len(possible_categories) == 1:
-        print("For your category: " + possible_categories + " These are your options:")
-        recommend(possible_categories)
+        print("This is your category: " + str(possible_categories))
+        right_choice = input("Are you okay with this choice? y/n ")
+        if right_choice == "y":
+            print("For your category: " + str(possible_categories) + " These are your options:")
+            recommend(possible_categories[0])
+        else:
+            autocomplete()
     return possible_categories
     
 
 if __name__ == "__main__":
     greet()
-
+    autocomplete()
     goodbye()
