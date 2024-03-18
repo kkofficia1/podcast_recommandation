@@ -64,4 +64,11 @@ def autocomplete():
 if __name__ == "__main__":
     greet()
     autocomplete()
-    goodbye()
+    ask_more = True
+    while ask_more:
+        more_podcasts = input("Do you want to get some more recommendations? y/n ")
+        if more_podcasts =="y":
+            autocomplete()
+        else:
+            ask_more = False
+            goodbye()
